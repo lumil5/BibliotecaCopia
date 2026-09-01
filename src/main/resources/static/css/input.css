@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark, nord;
+}
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Escanear todas las plantillas Thymeleaf */
+@source "../../templates/**/*.html";
+
+/* Ajustes globales de estética minimalista */
+body {
+  font-family: var(--font-sans);
+  letter-spacing: -0.01em;
+  background-color: #fafafa;
+}
+
+/* Scrollbar minimalista */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #e4e4e7;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4d4d8;
+}

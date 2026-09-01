@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Fragment</title>
+</head>
+<body>
+    <!-- Navbar Minimalista -->
+    <nav th:fragment="navbar" class="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-zinc-200/80 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            
+            <!-- Izquierda: Marca y Menú de Navegación -->
+            <div class="flex items-center gap-8">
+                <!-- Logotipo Minimalista -->
+                <a th:href="@{/}" class="flex items-center gap-2.5 group">
+                    <div class="w-8 h-8 rounded-lg bg-zinc-900 text-white flex items-center justify-center font-bold text-sm shadow-xs transition-transform group-hover:scale-105">
+                        B
+                    </div>
+                    <span class="font-bold text-base tracking-tight text-zinc-900">
+                        Biblioteca<span class="text-zinc-400 font-normal">OS</span>
+                    </span>
+                </a>
+
+                <!-- Enlaces de Escritorio -->
+                <div class="hidden md:flex items-center gap-1">
+                    <a th:href="@{/}" class="px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-900 bg-zinc-100 hover:bg-zinc-200/70 transition-colors">
+                        Dashboard
+                    </a>
+                    <a th:href="@{/libros}" class="px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/60 transition-colors">
+                        Libros
+                    </a>
+                    <a th:href="@{/autores}" class="px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/60 transition-colors">
+                        Autores
+                    </a>
+                    <a th:href="@{/categorias}" class="px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/60 transition-colors">
+                        Categorías
+                    </a>
+                    
+                    <!-- Dropdown Más -->
+                    <div class="dropdown dropdown-hover">
+                        <div tabindex="0" role="button" class="px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/60 transition-colors flex items-center gap-1 cursor-pointer">
+                            <span>Gestión</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                        <ul tabindex="0" class="dropdown-content z-1 menu p-1.5 shadow-xl bg-white border border-zinc-200 rounded-xl w-44 text-sm mt-1">
+                            <li><a th:href="@{/editoriales}" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Editoriales</a></li>
+                            <li><a th:href="@{/ejemplares}" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Ejemplares</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Derecha: Buscador, Notificaciones y Perfil -->
+            <div class="flex items-center gap-3">
+                <!-- Buscador Minimalista -->
+                <div class="relative hidden sm:block">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <input type="text" placeholder="Buscar..." class="w-48 lg:w-64 pl-9 pr-3 py-1.5 bg-zinc-50 border border-zinc-200 rounded-lg text-sm text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 transition-all" />
+                </div>
+
+                <!-- Notificaciones -->
+                <button class="relative p-2 rounded-lg text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition-colors" aria-label="Notificaciones">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                    </svg>
+                    <span class="absolute top-2 right-2 w-2 h-2 bg-zinc-900 rounded-full"></span>
+                </button>
+
+                <!-- Divisor -->
+                <div class="h-5 w-[1px] bg-zinc-200 hidden sm:block"></div>
+
+                <!-- Menú Usuario -->
+                <div class="dropdown dropdown-end">
+                    <div tabindex="0" role="button" class="flex items-center gap-2 p-1 rounded-lg hover:bg-zinc-100 cursor-pointer transition-colors">
+                        <div class="w-8 h-8 rounded-full bg-zinc-200 text-zinc-800 flex items-center justify-center font-semibold text-xs border border-zinc-300">
+                            AD
+                        </div>
+                    </div>
+                    <ul tabindex="0" class="dropdown-content z-1 menu p-1.5 shadow-xl bg-white border border-zinc-200 rounded-xl w-48 text-sm mt-2">
+                        <li class="px-3 py-1.5 border-b border-zinc-100 mb-1">
+                            <span class="text-xs font-semibold text-zinc-900">Admin</span>
+                            <span class="text-[11px] text-zinc-400 -mt-1">admin@biblioteca.org</span>
+                        </li>
+                        <li><a th:href="@{/perfil}" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Perfil</a></li>
+                        <li><a th:href="@{/configuracion}" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Ajustes</a></li>
+                        <div class="divider my-0.5"></div>
+                        <li><a th:href="@{/logout}" class="py-2 text-red-600 hover:bg-red-50 rounded-lg">Cerrar sesión</a></li>
+                    </ul>
+                </div>
+
+                <!-- Menú Hamburguesa Móvil -->
+                <div class="dropdown dropdown-end md:hidden">
+                    <div tabindex="0" role="button" class="p-2 rounded-lg text-zinc-600 hover:bg-zinc-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </div>
+                    <ul tabindex="0" class="dropdown-content z-1 menu p-2 shadow-xl bg-white border border-zinc-200 rounded-xl w-56 text-sm mt-2">
+                        <li><a th:href="@{/}">Dashboard</a></li>
+                        <li><a th:href="@{/libros}">Libros</a></li>
+                        <li><a th:href="@{/autores}">Autores</a></li>
+                        <li><a th:href="@{/categorias}">Categorías</a></li>
+                        <li><a th:href="@{/editoriales}">Editoriales</a></li>
+                        <li><a th:href="@{/ejemplares}">Ejemplares</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </nav>
+</body>
+</html>

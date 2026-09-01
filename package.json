@@ -1,0 +1,19 @@
+{
+  "name": "Biblioteca",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/tailwind.css --watch",
+    "build": "tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/tailwind.css --minify"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.4",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "daisyui": "^5.7.23",
+    "tailwindcss": "^4.3.3"
+  }
+}
