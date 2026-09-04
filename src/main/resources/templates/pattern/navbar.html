@@ -6,14 +6,14 @@
     <title>Navbar Fragment</title>
 </head>
 <body>
-    <!-- Navbar Minimalista -->
+    <!-- Navbar Minimalista con enlaces apuntando a target="mainFrame" -->
     <nav th:fragment="navbar" class="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-zinc-200/80 transition-all">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
             
             <!-- Izquierda: Marca y Menú de Navegación -->
             <div class="flex items-center gap-8">
                 <!-- Logotipo Minimalista -->
-                <a th:href="@{/}" class="flex items-center gap-2.5 group">
+                <a th:href="@{/dashboard}" target="mainFrame" class="flex items-center gap-2.5 group">
                     <div class="w-8 h-8 rounded-lg bg-zinc-900 text-white flex items-center justify-center font-bold text-sm shadow-xs transition-transform group-hover:scale-105">
                         B
                     </div>
@@ -23,21 +23,21 @@
                 </a>
 
                 <!-- Enlaces de Escritorio -->
-                <div class="hidden md:flex items-center gap-1">
-                    <a th:href="@{/}" class="px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-900 bg-zinc-100 hover:bg-zinc-200/70 transition-colors">
+                <div class="hidden md:flex items-center gap-1 nav-links">
+                    <a th:href="@{/dashboard}" target="mainFrame" class="nav-item px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-900 bg-zinc-100 hover:bg-zinc-200/70 transition-colors">
                         Dashboard
                     </a>
-                    <a th:href="@{/libros}" class="px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/60 transition-colors">
+                    <a th:href="@{/Libros/registrar}" target="mainFrame" class="nav-item px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/60 transition-colors">
                         Libros
                     </a>
-                    <a th:href="@{/autores}" class="px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/60 transition-colors">
+                    <a th:href="@{/autores}" target="mainFrame" class="nav-item px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/60 transition-colors">
                         Autores
                     </a>
-                    <a th:href="@{/categorias}" class="px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/60 transition-colors">
+                    <a th:href="@{/categorias}" target="mainFrame" class="nav-item px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/60 transition-colors">
                         Categorías
                     </a>
                     
-                    <!-- Dropdown Más -->
+                    <!-- Dropdown Gestión -->
                     <div class="dropdown dropdown-hover">
                         <div tabindex="0" role="button" class="px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/60 transition-colors flex items-center gap-1 cursor-pointer">
                             <span>Gestión</span>
@@ -46,8 +46,8 @@
                             </svg>
                         </div>
                         <ul tabindex="0" class="dropdown-content z-1 menu p-1.5 shadow-xl bg-white border border-zinc-200 rounded-xl w-44 text-sm mt-1">
-                            <li><a th:href="@{/editoriales}" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Editoriales</a></li>
-                            <li><a th:href="@{/ejemplares}" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Ejemplares</a></li>
+                            <li><a th:href="@{/editoriales}" target="mainFrame" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Editoriales</a></li>
+                            <li><a th:href="@{/ejemplares}" target="mainFrame" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Ejemplares</a></li>
                         </ul>
                     </div>
                 </div>
@@ -88,8 +88,8 @@
                             <span class="text-xs font-semibold text-zinc-900">Admin</span>
                             <span class="text-[11px] text-zinc-400 -mt-1">admin@biblioteca.org</span>
                         </li>
-                        <li><a th:href="@{/perfil}" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Perfil</a></li>
-                        <li><a th:href="@{/configuracion}" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Ajustes</a></li>
+                        <li><a th:href="@{/perfil}" target="mainFrame" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Perfil</a></li>
+                        <li><a th:href="@{/configuracion}" target="mainFrame" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Ajustes</a></li>
                         <div class="divider my-0.5"></div>
                         <li><a th:href="@{/logout}" class="py-2 text-red-600 hover:bg-red-50 rounded-lg">Cerrar sesión</a></li>
                     </ul>
@@ -103,12 +103,12 @@
                         </svg>
                     </div>
                     <ul tabindex="0" class="dropdown-content z-1 menu p-2 shadow-xl bg-white border border-zinc-200 rounded-xl w-56 text-sm mt-2">
-                        <li><a th:href="@{/}">Dashboard</a></li>
-                        <li><a th:href="@{/libros}">Libros</a></li>
-                        <li><a th:href="@{/autores}">Autores</a></li>
-                        <li><a th:href="@{/categorias}">Categorías</a></li>
-                        <li><a th:href="@{/editoriales}">Editoriales</a></li>
-                        <li><a th:href="@{/ejemplares}">Ejemplares</a></li>
+                        <li><a th:href="@{/dashboard}" target="mainFrame">Dashboard</a></li>
+                        <li><a th:href="@{/Libros/registrar}" target="mainFrame">Libros</a></li>
+                        <li><a th:href="@{/autores}" target="mainFrame">Autores</a></li>
+                        <li><a th:href="@{/categorias}" target="mainFrame">Categorías</a></li>
+                        <li><a th:href="@{/editoriales}" target="mainFrame">Editoriales</a></li>
+                        <li><a th:href="@{/ejemplares}" target="mainFrame">Ejemplares</a></li>
                     </ul>
                 </div>
 

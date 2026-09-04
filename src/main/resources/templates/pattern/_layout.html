@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca OS</title>
+    <link rel="stylesheet" th:href="@{/css/tailwind.css}">
+    <link rel="stylesheet" th:href="@{/css/styleIframe.css}">
+</head>
+<body>
+    <div class="shell">
+        
+        <div class="shell-navbar">
+            <div th:replace="~{pattern/navbar :: navbar}"></div>
+        </div>
+
+        <!-- Iframe -->
+        <div class="shell-content">
+            <iframe id="mainFrame"
+                    name="mainFrame"
+                    th:src="@{/dashboard}"
+                    title="Contenido Principal">
+            </iframe>
+        </div>
+
+        <!-- Footer -->
+        <div class="shell-footer">
+            <div th:replace="~{pattern/footer :: footer}"></div>
+        </div>
+    </div>
+</body>
+</html>

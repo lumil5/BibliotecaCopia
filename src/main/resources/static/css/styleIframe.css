@@ -1,0 +1,34 @@
+/* Reset total para el cascarón del iframe */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+.shell {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh; /* soporte moderno */
+}
+.shell-navbar {
+    flex-shrink: 0;
+    height: 4rem; /* 64px = h-16 */
+}
+.shell-content {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    min-height: 0;
+}
+.shell-content iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+.shell-footer {
+    flex-shrink: 0;
+}

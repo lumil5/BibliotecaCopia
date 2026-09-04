@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard — Biblioteca</title>
-    <!-- Estilos compilados de Tailwind CSS v4 y daisyUI v5 -->
-    <link rel="stylesheet" th:href="@{/css/tailwind.css}">
+<head th:replace="~{pattern/head :: head}">
+    <title>Dashboard</title>
 </head>
-<body class="bg-zinc-50 min-h-screen flex flex-col font-sans text-zinc-900 antialiased selection:bg-zinc-900 selection:text-white">
+<body class="bg-zinc-50 font-sans text-zinc-900 antialiased selection:bg-zinc-900 selection:text-white">
 
-    <!-- Fragmento Navbar Minimalista -->
-    <div th:replace="~{pattern/navbar :: navbar}"></div>
-
-    <!-- Contenido Principal -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <!-- Contenido -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
         <!-- Encabezado / Titular -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-zinc-200">
@@ -22,7 +15,7 @@
                 <p class="text-xs text-zinc-500 mt-1">Resumen general del estado de la biblioteca y métricas clave.</p>
             </div>
             <div class="flex items-center gap-2">
-                <a th:href="@{/libros/nuevo}" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-zinc-900 text-white text-xs font-medium hover:bg-zinc-800 transition-colors shadow-xs">
+                <a th:href="@{/Libros/registrar}" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-zinc-900 text-white text-xs font-medium hover:bg-zinc-800 transition-colors shadow-xs">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
@@ -37,7 +30,7 @@
             </div>
         </div>
 
-        <!-- Tarjetas de Métricas Minimalistas (KPIs) -->
+        <!-- Tarjetas de Métricas (KPIs) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             
             <!-- Card 1: Libros -->
@@ -110,7 +103,7 @@
                         <h2 class="text-sm font-semibold text-zinc-900">Libros Registrados Recientemente</h2>
                         <p class="text-xs text-zinc-500">Últimas adiciones al inventario</p>
                     </div>
-                    <a th:href="@{/libros}" class="text-xs font-medium text-zinc-600 hover:text-zinc-900 hover:underline transition-all">
+                    <a th:href="@{/Libros/registrar}" class="text-xs font-medium text-zinc-600 hover:text-zinc-900 hover:underline transition-all">
                         Ver catálogo completo →
                     </a>
                 </div>
@@ -270,10 +263,7 @@
 
         </div>
 
-    </main>
-
-    <!-- Fragmento Footer Minimalista -->
-    <div th:replace="~{pattern/footer :: footer}"></div>
+    </div>
 
 </body>
 </html>
