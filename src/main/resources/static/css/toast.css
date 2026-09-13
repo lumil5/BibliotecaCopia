@@ -1,0 +1,33 @@
+/* Estilos y Animaciones para Notificaciones Toast */
+@keyframes toastFadeOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    85% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-12px);
+        visibility: hidden;
+    }
+}
+
+@keyframes toastProgress {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 0%;
+    }
+}
+
+.animate-toast-dismiss {
+    animation: toastFadeOut 4.5s ease-in-out forwards;
+}
+
+.animate-toast-bar {
+    animation: toastProgress 4.2s linear forwards;
+}

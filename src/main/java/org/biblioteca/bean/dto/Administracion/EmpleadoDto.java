@@ -24,6 +24,8 @@ import lombok.NoArgsConstructor;
 public class EmpleadoDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Integer idEmpleado;
+
     @NotBlank(message = "El cargo es obligatorio")
     @Size(max = 50, message = "El cargo no puede exceder los 50 caracteres")
     private String cargo;

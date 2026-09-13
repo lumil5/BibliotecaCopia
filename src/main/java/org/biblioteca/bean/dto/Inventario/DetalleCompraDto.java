@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 public class DetalleCompraDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Integer idDetalleCompra;
+
     @NotNull(message = "La compra es obligatoria")
     @Positive(message = "El ID de la compra debe ser positivo")
     private Integer idCompra;

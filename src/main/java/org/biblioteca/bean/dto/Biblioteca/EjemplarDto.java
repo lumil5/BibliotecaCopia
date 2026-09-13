@@ -18,6 +18,8 @@ import lombok.NoArgsConstructor;
 public class EjemplarDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Integer idEjemplar;
+
     @NotNull(message = "El libro es obligatorio")
     @Positive(message = "El ID del libro debe ser positivo")
     private Integer idLibro;

@@ -22,6 +22,8 @@ import lombok.NoArgsConstructor;
 public class DetallePrestamoDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Integer idDetallePrestamo;
+
     @NotNull(message = "El préstamo es obligatorio")
     @Positive(message = "El ID de préstamo debe ser positivo")
     private Integer idPrestamo;

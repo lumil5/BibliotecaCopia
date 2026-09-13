@@ -24,6 +24,8 @@ import lombok.NoArgsConstructor;
 public class MultaDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Integer idMulta;
+
     @NotNull(message = "El detalle de préstamo es obligatorio")
     @Positive(message = "El ID del detalle de préstamo debe ser positivo")
     private Integer idDetallePrestamo;

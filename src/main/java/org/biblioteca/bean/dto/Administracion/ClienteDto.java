@@ -23,6 +23,8 @@ import lombok.NoArgsConstructor;
 public class ClienteDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Integer idCliente;
+
     @NotBlank(message = "El código es obligatorio")
     @Pattern(regexp = "^[NEP]\\d{4}$", message = "El código debe tener formato N0001, E0001 o P0001")
     private String codigo;

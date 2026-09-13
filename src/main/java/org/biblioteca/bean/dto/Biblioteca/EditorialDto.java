@@ -19,6 +19,8 @@ import lombok.NoArgsConstructor;
 public class EditorialDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Integer idEditorial;
+
     @NotBlank(message = "El nombre es obligatorio")
     @Size(max = 100, message = "El nombre no puede exceder los 100 caracteres")
     private String nombre;

@@ -18,6 +18,8 @@ import lombok.NoArgsConstructor;
 public class ProveedorDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Integer idProveedor;
+
     @NotBlank(message = "El RUC es obligatorio")
     @Pattern(regexp = "^\\d{11}$", message = "El RUC debe tener 11 dígitos")
     private String ruc;

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Toast Fragment</title>
+</head>
+<body>
+
+    <!-- Fragmento Reutilizable de Notificaciones Toast -->
+    <div th:fragment="toast" class="fixed top-5 right-5 z-50 flex flex-col gap-3 max-w-sm pointer-events-none">
+
+        <!-- 1. Toast de Éxito (VERDE / Emerald) -->
+        <div th:if="${mensajeExito}" id="toast-exito"
+             class="pointer-events-auto animate-toast-dismiss flex flex-col overflow-hidden bg-emerald-500/10 backdrop-blur-md text-emerald-700 dark:text-emerald-300 text-xs font-semibold rounded-xl shadow-lg border border-emerald-500/30 transition-all">
+            <div class="flex items-center gap-3 px-4 py-3">
+                <div class="w-7 h-7 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                </div>
+                <span th:text="${mensajeExito}">Operación realizada con éxito</span>
+                <button type="button" onclick="cerrarToast('toast-exito')" 
+                        class="ml-auto text-emerald-500 hover:text-emerald-800 dark:hover:text-white text-base font-bold leading-none p-1 transition-colors">&times;</button>
+            </div>
+            <!-- Barra de progreso temporal -->
+            <div class="h-0.5 bg-emerald-500/40 animate-toast-bar"></div>
+        </div>
+
+        <!-- 2. Toast de Error (ROJO / Rose) -->
+        <div th:if="${mensajeError}" id="toast-error"
+             class="pointer-events-auto animate-toast-dismiss flex flex-col overflow-hidden bg-rose-500/10 backdrop-blur-md text-rose-700 dark:text-rose-300 text-xs font-semibold rounded-xl shadow-lg border border-rose-500/30 transition-all">
+            <div class="flex items-center gap-3 px-4 py-3">
+                <div class="w-7 h-7 rounded-lg bg-rose-500/20 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 text-rose-600 dark:text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <span th:text="${mensajeError}">Ocurrió un error inesperado</span>
+                <button type="button" onclick="cerrarToast('toast-error')" 
+                        class="ml-auto text-rose-500 hover:text-rose-800 dark:hover:text-white text-base font-bold leading-none p-1 transition-colors">&times;</button>
+            </div>
+            <!-- Barra de progreso temporal -->
+            <div class="h-0.5 bg-rose-500/40 animate-toast-bar"></div>
+        </div>
+
+        <!-- 3. Toast de Advertencia (ÁMBAR / Amber) -->
+        <div th:if="${mensajeAdvertencia}" id="toast-advertencia"
+             class="pointer-events-auto animate-toast-dismiss flex flex-col overflow-hidden bg-amber-500/10 backdrop-blur-md text-amber-700 dark:text-amber-300 text-xs font-semibold rounded-xl shadow-lg border border-amber-500/30 transition-all">
+            <div class="flex items-center gap-3 px-4 py-3">
+                <div class="w-7 h-7 rounded-lg bg-amber-500/20 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                </div>
+                <span th:text="${mensajeAdvertencia}">Tenga cuidado con esta acción</span>
+                <button type="button" onclick="cerrarToast('toast-advertencia')" 
+                        class="ml-auto text-amber-500 hover:text-amber-800 dark:hover:text-white text-base font-bold leading-none p-1 transition-colors">&times;</button>
+            </div>
+            <!-- Barra de progreso temporal -->
+            <div class="h-0.5 bg-amber-500/40 animate-toast-bar"></div>
+        </div>
+
+        <!-- 4. Toast de Información (AZUL / Sky) -->
+        <div th:if="${mensajeInfo}" id="toast-info"
+             class="pointer-events-auto animate-toast-dismiss flex flex-col overflow-hidden bg-sky-500/10 backdrop-blur-md text-sky-700 dark:text-sky-300 text-xs font-semibold rounded-xl shadow-lg border border-sky-500/30 transition-all">
+            <div class="flex items-center gap-3 px-4 py-3">
+                <div class="w-7 h-7 rounded-lg bg-sky-500/20 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 text-sky-600 dark:text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <span th:text="${mensajeInfo}">Información del sistema</span>
+                <button type="button" onclick="cerrarToast('toast-info')" 
+                        class="ml-auto text-sky-500 hover:text-sky-800 dark:hover:text-white text-base font-bold leading-none p-1 transition-colors">&times;</button>
+            </div>
+            <!-- Barra de progreso temporal -->
+            <div class="h-0.5 bg-sky-500/40 animate-toast-bar"></div>
+        </div>
+
+    </div>
+
+</body>
+</html>

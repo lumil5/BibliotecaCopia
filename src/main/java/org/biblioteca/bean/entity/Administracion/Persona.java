@@ -4,9 +4,13 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.biblioteca.bean.Enum.TipoEstado;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -60,7 +64,8 @@ public class Persona implements Serializable {
     private String sexo;
 
     @Column(name = "estado")
-    private Boolean estado;
+    @Enumerated(EnumType.STRING)
+    private TipoEstado estado;
 
     // Sirve para mapear las clases <> tabla relacional
     // mapper del nombre del atributo de la clase Empleado

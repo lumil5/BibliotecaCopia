@@ -18,6 +18,8 @@ import lombok.NoArgsConstructor;
 public class LibroDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Integer idLibro;
+
     @NotBlank(message = "El ISBN es obligatorio")
     @Size(max = 20, message = "El ISBN no puede exceder los 20 caracteres")
     private String isbn;

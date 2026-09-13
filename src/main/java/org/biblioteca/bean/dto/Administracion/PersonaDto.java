@@ -3,6 +3,7 @@ package org.biblioteca.bean.dto.Administracion;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import org.biblioteca.bean.Enum.TipoEstado;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -23,6 +24,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PersonaDto implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    private Integer idPersona;
 
     @NotBlank(message = "El DNI es obligatorio")
     @Pattern(regexp = "^\\d{8}$", message = "El DNI debe tener 8 dígitos")
@@ -61,7 +64,7 @@ public class PersonaDto implements Serializable {
     @NotBlank(message = "El sexo es obligatorio")
     @Pattern(regexp = "^[MF]$", message = "El sexo debe ser M o F")
     private String sexo;
-
+    
     @NotNull(message = "El estado es obligatorio")
-    private Boolean estado;
+    private TipoEstado estado;
 }

@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 public class CategoriaDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Integer idCategoria;
+
     @NotBlank(message = "El nombre es obligatorio")
     @Size(max = 50, message = "El nombre no puede exceder los 50 caracteres")
     private String nombre;

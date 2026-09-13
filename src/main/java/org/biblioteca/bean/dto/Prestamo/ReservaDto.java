@@ -21,6 +21,8 @@ import lombok.NoArgsConstructor;
 public class ReservaDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Integer idReserva;
+
     @NotNull(message = "El cliente es obligatorio")
     @Positive(message = "El ID del cliente debe ser positivo")
     private Integer idCliente;

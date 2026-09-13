@@ -99,9 +99,12 @@
                 
                 <!-- Encabezado de la tabla -->
                 <div class="px-6 py-4 border-b border-zinc-100 flex items-center justify-between">
-                    <div>
-                        <h2 class="text-sm font-semibold text-zinc-900">Libros Registrados Recientemente</h2>
-                        <p class="text-xs text-zinc-500">Últimas adiciones al inventario</p>
+                    <div class="flex items-center gap-3">
+                        <span class="w-1 h-5 rounded-full bg-blue-500"></span>
+                        <div>
+                            <h2 class="text-sm font-semibold text-zinc-900">Libros Registrados Recientemente</h2>
+                            <p class="text-xs text-zinc-500">Últimas adiciones al inventario</p>
+                        </div>
                     </div>
                     <a th:href="@{/Libros/registrar}" class="text-xs font-medium text-zinc-600 hover:text-zinc-900 hover:underline transition-all">
                         Ver catálogo completo →

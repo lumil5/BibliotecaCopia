@@ -13,6 +13,11 @@
 # Con Maven del sistema
 mvn spring-boot:run
 
+# compile tailwindcss
+```powershell
+pnpm run build
+```
+
 # Con recarga en caliente (DevTools activo)
 .\mvnw.cmd spring-boot:run -Dspring-boot.run.jvmArguments="-Dspring.devtools.restart.enabled=true"
 ```

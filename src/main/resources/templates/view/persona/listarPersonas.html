@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{pattern/head :: head}">
+    <title>Listado de Personal</title>
+</head>
+<body class="bg-zinc-50 font-sans text-zinc-900 antialiased selection:bg-zinc-900 selection:text-white">
+
+    <!-- Contenido -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+        <!-- Encabezado / Titular -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-zinc-200">
+            <div>
+                <h1 class="text-2xl font-bold tracking-tight text-zinc-900">Personal</h1>
+                <p class="text-xs text-zinc-500 mt-1">Resumen general de personal.</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <!-- Azul: acción de navegación/creación -->
+                <a th:href="@{/Personas}" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition-colors shadow-xs">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    Nuevo Personal
+                </a>
+            </div>
+        </div>
+
+        <!-- Tabla de Personas -->
+        <div class="bg-white rounded-xl border border-zinc-200/80 shadow-xs overflow-hidden flex flex-col">
+
+            <!-- Encabezado de la tabla con barra lateral azul -->
+            <div class="px-6 py-4 border-b border-zinc-100 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-1 h-5 rounded-full bg-blue-500"></span>
+                    <div>
+                        <h2 class="text-sm font-semibold text-zinc-900">Listado de Personal</h2>
+                        <p class="text-xs text-zinc-500">Personas registradas en el sistema</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-zinc-50/70 border-b border-zinc-100 text-[11px] uppercase tracking-wider text-zinc-500 font-medium">
+                        <tr>
+                            <th class="px-4 py-3 w-10 text-center">#</th>
+                            <th class="px-6 py-3">Nombre</th>
+                            <th class="px-4 py-3">Apellidos</th>
+                            <th class="px-4 py-3">DNI</th>
+                            <th class="px-4 py-3">Correo</th>
+                            <th class="px-4 py-3">Teléfono</th>
+                            <th class="px-4 py-3">Estado</th>
+                            <th class="px-6 py-3 text-right">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-zinc-100 text-xs">
+                        <tr th:each="per, iterStat : ${ListaPersonas}" class="hover:bg-zinc-50/50 transition-colors">
+                            <!-- Número de fila -->
+                            <td class="px-4 py-3.5 text-center text-zinc-400 font-mono" th:text="${iterStat.count}"></td>
+                            <td class="px-6 py-3.5">
+                                <div class="font-medium text-zinc-900 text-xs" th:text="${per.nombre}"></div>
+                            </td>
+                            <td class="px-4 py-3.5 text-zinc-600"
+                                th:text="${per.apellidoPaterno} + ' ' + ${per.apellidoMaterno}"></td>
+                            <td class="px-4 py-3.5 text-zinc-600 font-mono" th:text="${per.dni}"></td>
+                            <td class="px-4 py-3.5 text-zinc-600" th:text="${per.correo}"></td>
+                            <td class="px-4 py-3.5 text-zinc-600" th:text="${per.telefono}"></td>
+                            <td class="px-4 py-3.5">
+                                <!-- Verde: ACTIVO | Ámbar: SUSPENDIDO | Rojo: INACTIVO -->
+                                <span th:if="${per.estado.name() == 'ACTIVO'}" class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700">
+                                    <span class="relative flex h-2 w-2 items-center justify-center">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                        <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                                    </span>
+                                    <span th:text="${per.estado}"></span>
+                                </span>
+                                <span th:if="${per.estado.name() == 'SUSPENDIDO'}" class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-amber-700">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                                    <span th:text="${per.estado}"></span>
+                                </span>
+                                <span th:if="${per.estado.name() != 'ACTIVO' and per.estado.name() != 'SUSPENDIDO'}" class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-red-600">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                    <span th:text="${per.estado}"></span>
+                                </span>
+                            </td>
+                            <td class="px-6 py-3.5 text-right">
+                                <div class="flex items-center justify-end gap-1.5">
+                                    <!-- Azul: acción de editar (neutral/común) -->
+                                    <button type="submit" name="modificarPersona" th:value="${per.dni}"
+                                        title="Editar"
+                                        class="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                    <!-- Rojo: acción de eliminar (negativa) -->
+                                    <button type="submit" name="eliminarPersona" th:value="${per.dni}"
+                                        title="Eliminar"
+                                        class="flex h-7 w-7 items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-colors">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Footer de la tabla con conteo -->
+            <div th:if="${ListaPersonas != null}" class="px-6 py-3 border-t border-zinc-100 bg-zinc-50/50 flex items-center justify-between">
+                <p class="text-[11px] text-zinc-400">
+                    <span th:text="${#lists.size(ListaPersonas)}"></span> registro(s) en total
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
