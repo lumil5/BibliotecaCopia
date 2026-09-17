@@ -8,6 +8,7 @@ CREATE SCHEMA IF NOT EXISTS administracion;
 CREATE SCHEMA IF NOT EXISTS biblioteca;
 CREATE SCHEMA IF NOT EXISTS inventario;
 CREATE SCHEMA IF NOT EXISTS prestamo;
+CREATE SCHEMA IF NOT EXISTS seguridad;
 
 -- ==========================================================
 -- ESQUEMA: administracion
@@ -25,7 +26,7 @@ CREATE TABLE IF NOT EXISTS administracion.persona (
     correo VARCHAR(100),
     "fechaNacimiento" DATE,
     sexo VARCHAR(10),
-    estado BOOLEAN DEFAULT TRUE
+    estado VARCHAR(20) DEFAULT 'ACTIVO'
 );
 
 -- Tabla: cliente
@@ -233,3 +234,98 @@ CREATE TABLE IF NOT EXISTS prestamo.reserva (
         REFERENCES biblioteca.libro ("idLibro")
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
+
+-- ==========================================================
+-- ESQUEMA: seguridad
+-- ==========================================================
+
+-- Tabla: rol
+CREATE TABLE IF NOT EXISTS seguridad.rol (
+    id_rol SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL UNIQUE,
+    descripcion VARCHAR(255)
+);
+
+-- Tabla: usuario
+CREATE TABLE IF NOT EXISTS seguridad.usuario (
+    id_usuario SERIAL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    estado VARCHAR(20) DEFAULT 'ACTIVO',
+    id_rol INT NOT NULL,
+    CONSTRAINT fk_usuario_rol FOREIGN KEY (id_rol)
+        REFERENCES seguridad.rol (id_rol)
+        ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+-- Tabla: modulo
+CREATE TABLE IF NOT EXISTS seguridad.modulo (
+    id_modulo SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    codigo VARCHAR(50) NOT NULL UNIQUE,
+    icono VARCHAR(50),
+    ruta VARCHAR(100) NOT NULL,
+    orden INT DEFAULT 0,
+    estado BOOLEAN DEFAULT TRUE
+);
+
+-- Tabla: usuario_permiso
+CREATE TABLE IF NOT EXISTS seguridad.usuario_permiso (
+    id_usuario_permiso SERIAL PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_modulo INT NOT NULL,
+    puede_leer BOOLEAN DEFAULT FALSE,
+    puede_crear BOOLEAN DEFAULT FALSE,
+    puede_editar BOOLEAN DEFAULT FALSE,
+    puede_eliminar BOOLEAN DEFAULT FALSE,
+    puede_imprimir BOOLEAN DEFAULT FALSE,
+    CONSTRAINT uq_usuario_modulo UNIQUE (id_usuario, id_modulo),
+    CONSTRAINT fk_permiso_usuario FOREIGN KEY (id_usuario)
+        REFERENCES seguridad.usuario (id_usuario)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_permiso_modulo FOREIGN KEY (id_modulo)
+        REFERENCES seguridad.modulo (id_modulo)
+        ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+-- ==========================================================
+-- MIGRACIÓN Y SEED DATA INICIAL PARA SEGURIDAD
+-- ==========================================================
+
+-- Asegurar tipo VARCHAR(20) para columna estado si las tablas ya existían previamente con tipo BOOLEAN
+ALTER TABLE IF EXISTS seguridad.usuario ALTER COLUMN estado TYPE VARCHAR(20) USING (CASE WHEN estado::text IN ('true', 't', 'ACTIVO') THEN 'ACTIVO' ELSE 'INACTIVO' END);
+ALTER TABLE IF EXISTS administracion.persona ALTER COLUMN estado TYPE VARCHAR(20) USING (CASE WHEN estado::text IN ('true', 't', 'ACTIVO') THEN 'ACTIVO' ELSE 'INACTIVO' END);
+
+-- Roles
+INSERT INTO seguridad.rol (id_rol, nombre, descripcion)
+VALUES 
+    (1, 'ROLE_ADMIN', 'Administrador del sistema con acceso total'),
+    (2, 'ROLE_BIBLIOTECARIO', 'Gestor de libros, personas y préstamos'),
+    (3, 'ROLE_LECTOR', 'Usuario lector con permisos de consulta')
+ON CONFLICT (id_rol) DO NOTHING;
+
+-- Modulos del sistema Biblioteca
+INSERT INTO seguridad.modulo (id_modulo, nombre, codigo, icono, ruta, orden, estado)
+VALUES 
+    (1, 'Dashboard', 'MOD_DASHBOARD', 'bi bi-speedometer2', '/dashboard', 1, true),
+    (2, 'Gestión de Personas', 'MOD_PERSONAS', 'bi bi-people', '/Personas', 2, true),
+    (3, 'Catálogo de Libros', 'MOD_LIBROS', 'bi bi-book', '/Libros', 3, true),
+    (4, 'Préstamos y Reservas', 'MOD_PRESTAMOS', 'bi bi-journal-bookmark', '/Prestamos', 4, true)
+ON CONFLICT (id_modulo) DO NOTHING;
+
+-- Usuario inicial Admin (password: admin123 -> BCrypt verificado $2a$10$iVK9kD0Q8pP0nJn.y70Jv.3KKHkKSPn9c8j7Bh0erQrmme8R1MLw2)
+INSERT INTO seguridad.usuario (id_usuario, username, password, email, estado, id_rol)
+VALUES 
+    (1, 'admin', '$2a$10$iVK9kD0Q8pP0nJn.y70Jv.3KKHkKSPn9c8j7Bh0erQrmme8R1MLw2', 'admin@biblioteca.org', 'ACTIVO', 1)
+ON CONFLICT (id_usuario) DO UPDATE SET password = EXCLUDED.password, estado = EXCLUDED.estado;
+
+-- Permisos granulares para admin
+INSERT INTO seguridad.usuario_permiso (id_usuario, id_modulo, puede_leer, puede_crear, puede_editar, puede_eliminar, puede_imprimir)
+VALUES 
+    (1, 1, true, true, true, true, true),
+    (1, 2, true, true, true, true, true),
+    (1, 3, true, true, true, true, true),
+    (1, 4, true, true, true, true, true)
+ON CONFLICT (id_usuario, id_modulo) DO NOTHING;
+

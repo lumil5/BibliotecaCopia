@@ -21,6 +21,8 @@
         <!-- Formulario de Registro Minimalista -->
         <div class="bg-white rounded-xl border border-zinc-200/80 shadow-xs p-6 sm:p-8 max-w-4xl">
             <form th:action="@{/Libros/registrar}" method="post" class="space-y-6">
+                <!-- Token CSRF explícito para Spring Security -->
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="flex items-center gap-2">

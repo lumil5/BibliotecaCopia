@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar Fragment</title>
 </head>
 <body>
-    <!-- Navbar Minimalista con enlaces apuntando a target="mainFrame" -->
+    <!-- Navbar Minimalista con Menú Dinámico desde BD y Logout Seguro CSRF -->
     <nav th:fragment="navbar" class="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-zinc-200/80 transition-all">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
             
-            <!-- Izquierda: Marca y Menú de Navegación -->
+            <!-- Izquierda: Marca y Menú de Navegación Dinámico -->
             <div class="flex items-center gap-8">
                 <!-- Logotipo Minimalista -->
                 <a th:href="@{/dashboard}" target="mainFrame" class="flex items-center gap-2.5 group">
@@ -18,43 +18,25 @@
                         B
                     </div>
                     <span class="font-bold text-base tracking-tight text-zinc-900">
-                        Biblioteca<span class="text-zinc-400 font-normal">OS</span>
+                        Biblioteca<span class="text-blue-600 font-normal">OS</span>
                     </span>
                 </a>
 
-                <!-- Enlaces de Escritorio -->
+                <!-- Enlaces Dinámicos de BD según Permisos Granulares -->
                 <div class="hidden md:flex items-center gap-1 nav-links">
-                    <a th:href="@{/dashboard}" target="mainFrame" class="nav-item px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-900 bg-zinc-100 hover:bg-zinc-200/70 transition-colors">
-                        Dashboard
-                    </a>
-                    <a th:href="@{/Libros/registrar}" target="mainFrame" class="nav-item px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/60 transition-colors">
-                        Libros
-                    </a>
-                    <a th:href="@{/autores}" target="mainFrame" class="nav-item px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/60 transition-colors">
-                        Autores
-                    </a>
-                    <a th:href="@{/categorias}" target="mainFrame" class="nav-item px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/60 transition-colors">
-                        Categorías
-                    </a>
-                    
-                    <!-- Dropdown Gestión -->
-                    <div class="dropdown dropdown-hover">
-                        <div tabindex="0" role="button" class="px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/60 transition-colors flex items-center gap-1 cursor-pointer">
-                            <span>Administración</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </div>
-                        <ul tabindex="0" class="dropdown-content z-1 menu p-1.5 shadow-xl bg-white border border-zinc-200 rounded-xl w-44 text-sm mt-1">
-                            <li><a th:href="@{/Personas/Listar}" target="mainFrame" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Personas</a></li>
-                            <li><a th:href="@{/ejemplares}" target="mainFrame" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Clientes</a></li>
-                            <li><a th:href="@{/ejemplares}" target="mainFrame" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Empleados</a></li>
-                        </ul>
-                    </div>
+                    <th:block th:each="modulo : ${menuModulos}">
+                        <a th:if="${modulo.puedeLeer}"
+                           th:href="@{${modulo.ruta}}"
+                           target="mainFrame"
+                           class="nav-item px-3 py-1.5 rounded-lg text-sm font-medium text-zinc-700 hover:text-zinc-900 hover:bg-zinc-100/80 transition-colors flex items-center gap-1.5">
+                            <i th:if="${modulo.icono}" th:class="${modulo.icono}"></i>
+                            <span th:text="${modulo.nombre}">Módulo</span>
+                        </a>
+                    </th:block>
                 </div>
             </div>
 
-            <!-- Derecha: Buscador, Notificaciones y Perfil -->
+            <!-- Derecha: Buscador, Usuario y Logout -->
             <div class="flex items-center gap-3">
                 <!-- Buscador Minimalista -->
                 <div class="relative hidden sm:block">
@@ -66,53 +48,34 @@
                     <input type="text" placeholder="Buscar..." class="w-48 lg:w-64 pl-9 pr-3 py-1.5 bg-zinc-50 border border-zinc-200 rounded-lg text-sm text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 transition-all" />
                 </div>
 
-                <!-- Notificaciones -->
-                <button class="relative p-2 rounded-lg text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition-colors" aria-label="Notificaciones">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-                    </svg>
-                    <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></span>
-                </button>
-
                 <!-- Divisor -->
                 <div class="h-5 w-[1px] bg-zinc-200 hidden sm:block"></div>
 
                 <!-- Menú Usuario -->
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="flex items-center gap-2 p-1 rounded-lg hover:bg-zinc-100 cursor-pointer transition-colors">
-                        <div class="w-8 h-8 rounded-full bg-zinc-200 text-zinc-800 flex items-center justify-center font-semibold text-xs border border-zinc-300">
-                            AD
+                        <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center font-bold text-xs border border-blue-200">
+                            US
                         </div>
                     </div>
-                    <ul tabindex="0" class="dropdown-content z-1 menu p-1.5 shadow-xl bg-white border border-zinc-200 rounded-xl w-48 text-sm mt-2">
-                        <li class="px-3 py-1.5 border-b border-zinc-100 mb-1">
-                            <span class="text-xs font-semibold text-zinc-900">Admin</span>
-                            <span class="text-[11px] text-zinc-400 -mt-1">admin@biblioteca.org</span>
+                    <ul tabindex="0" class="dropdown-content z-1 menu p-1.5 shadow-xl bg-white border border-zinc-200 rounded-xl w-52 text-sm mt-2">
+                        <li class="px-3 py-2 border-b border-zinc-100 mb-1">
+                            <span class="text-xs font-semibold text-zinc-900" sec:authentication="name">Usuario</span>
+                            <span class="text-[11px] text-zinc-500 -mt-1 font-mono">JWT Autenticado</span>
                         </li>
-                        <li><a th:href="@{/perfil}" target="mainFrame" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Perfil</a></li>
-                        <li><a th:href="@{/configuracion}" target="mainFrame" class="py-2 text-zinc-700 hover:text-zinc-900 rounded-lg">Ajustes</a></li>
-                        <div class="divider my-0.5"></div>
-                        <li><a th:href="@{/logout}" class="py-2 text-red-600 hover:bg-red-50 rounded-lg">Cerrar sesión</a></li>
+                        <li>
+                            <form th:action="@{/auth/logout}" method="post" class="w-full">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                <button type="submit" class="w-full text-left py-2 px-3 text-red-600 hover:bg-red-50 rounded-lg flex items-center gap-2 transition-colors font-medium">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                    </svg>
+                                    Cerrar sesión
+                                </button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
-
-                <!-- Menú Hamburguesa Móvil -->
-                <div class="dropdown dropdown-end md:hidden">
-                    <div tabindex="0" role="button" class="p-2 rounded-lg text-zinc-600 hover:bg-zinc-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
-                        </svg>
-                    </div>
-                    <ul tabindex="0" class="dropdown-content z-1 menu p-2 shadow-xl bg-white border border-zinc-200 rounded-xl w-56 text-sm mt-2">
-                        <li><a th:href="@{/dashboard}" target="mainFrame">Dashboard</a></li>
-                        <li><a th:href="@{/Libros/registrar}" target="mainFrame">Libros</a></li>
-                        <li><a th:href="@{/autores}" target="mainFrame">Autores</a></li>
-                        <li><a th:href="@{/categorias}" target="mainFrame">Categorías</a></li>
-                        <li><a th:href="@{/editoriales}" target="mainFrame">Editoriales</a></li>
-                        <li><a th:href="@{/ejemplares}" target="mainFrame">Ejemplares</a></li>
-                    </ul>
-                </div>
-
             </div>
 
         </div>
