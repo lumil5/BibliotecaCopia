@@ -1,6 +1,6 @@
 package org.biblioteca.bean.Enum;
 
-public enum TipoCliente {
+public enum TipoUsuario {
     ESTUDIANTE("Estudiante"),
     DOCENTE("Docente"),
     ADMINISTRATIVO("Administrativo"),
@@ -8,7 +8,7 @@ public enum TipoCliente {
 
     private final String descripcion;
 
-    TipoCliente(String descripcion) {
+    TipoUsuario(String descripcion) {
         this.descripcion = descripcion;
     }
 

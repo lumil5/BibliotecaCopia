@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class PersonaModel implements PersonaUseCase {
-    // Implementar dependencias con las interfaces de repositorios
+
     private final PersonaRepository personaRepository;
 
     @Override

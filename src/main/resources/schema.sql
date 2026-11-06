@@ -8,6 +8,7 @@ CREATE SCHEMA IF NOT EXISTS administracion;
 CREATE SCHEMA IF NOT EXISTS biblioteca;
 CREATE SCHEMA IF NOT EXISTS inventario;
 CREATE SCHEMA IF NOT EXISTS prestamo;
+CREATE SCHEMA IF NOT EXISTS login;
 
 -- ==========================================================
 -- ESQUEMA: administracion
@@ -233,3 +234,42 @@ CREATE TABLE IF NOT EXISTS prestamo.reserva (
         REFERENCES biblioteca.libro ("idLibro")
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
+
+-- ==========================================================
+-- ESQUEMA: login
+-- ==========================================================
+
+-- Tabla: usuario
+CREATE TABLE IF NOT EXISTS login.usuario (
+    id_usuario SERIAL PRIMARY KEY,
+    nombre_usuario VARCHAR(50) NOT NULL UNIQUE,
+    clave VARCHAR(255) NOT NULL,
+    nivel_acceso VARCHAR(50) NOT NULL
+);
+
+-- Tabla: menu
+CREATE TABLE IF NOT EXISTS login.menu (
+    id_menu SERIAL PRIMARY KEY,
+    nombre_menu VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(255),
+    url_menu VARCHAR(255)
+);
+
+-- Tabla: permiso
+CREATE TABLE IF NOT EXISTS login.permiso (
+    id_permiso SERIAL PRIMARY KEY,
+    crear BOOLEAN DEFAULT FALSE,
+    leer BOOLEAN DEFAULT FALSE,
+    actualizar BOOLEAN DEFAULT FALSE,
+    imprimir BOOLEAN DEFAULT FALSE,
+    exportar BOOLEAN DEFAULT FALSE,
+    id_menu INT,
+    id_usuario INT,
+    CONSTRAINT fk_permiso_menu FOREIGN KEY (id_menu)
+        REFERENCES login.menu (id_menu)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_permiso_usuario FOREIGN KEY (id_usuario)
+        REFERENCES login.usuario (id_usuario)
+        ON UPDATE CASCADE ON DELETE CASCADE
+);
+
