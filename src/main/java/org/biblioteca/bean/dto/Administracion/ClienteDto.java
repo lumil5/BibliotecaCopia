@@ -3,6 +3,8 @@ package org.biblioteca.bean.dto.Administracion;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import org.biblioteca.bean.Enum.TipoEstado;
+import org.biblioteca.bean.Enum.TipoUsuario;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -30,7 +32,7 @@ public class ClienteDto implements Serializable {
     private String codigo;
 
     @NotNull(message = "El tipo de cliente es obligatorio")
-    private String tipoCliente;
+    private TipoUsuario tipoCliente;
 
     @NotNull(message = "La fecha de registro es obligatoria")
     @PastOrPresent(message = "La fecha de registro no puede ser futura")
@@ -39,7 +41,7 @@ public class ClienteDto implements Serializable {
     private LocalDate fechaRegistro;
 
     @NotNull(message = "El estado es obligatorio")
-    private Boolean estado;
+    private TipoEstado estado;
 
     // Solo necesita trabajar con integer idpersona para mostrar el valor, no con
     // objetos (sirven para mapear la entidad)

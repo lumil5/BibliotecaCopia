@@ -9,23 +9,26 @@
 </head>
 <body>
     <div class="shell">
-        
-        <div class="shell-navbar">
-            <div th:replace="~{pattern/navbar :: navbar}"></div>
-        </div>
 
-        <!-- Iframe -->
-        <div class="shell-content">
-            <iframe id="mainFrame"
-                    name="mainFrame"
-                    th:src="@{/dashboard}"
-                    title="Contenido Principal">
-            </iframe>
-        </div>
+        <!-- Menú vertical -->
+        <aside class="shell-navbar">
+            <div th:replace="~{pattern/navbarDinamico :: navbar}"></div>
+        </aside>
 
-        <!-- Footer -->
-        <div class="shell-footer">
-            <div th:replace="~{pattern/footer :: footer}"></div>
+        <!-- Contenido -->
+        <div class="shell-main">
+            <div class="shell-content">
+                <iframe id="mainFrame"
+                        name="mainFrame"
+                        th:src="@{/dashboard}"
+                        title="Contenido Principal">
+                </iframe>
+            </div>
+
+            <!-- Footer -->
+            <div class="shell-footer">
+                <div th:replace="~{pattern/footer :: footer}"></div>
+            </div>
         </div>
     </div>
 </body>

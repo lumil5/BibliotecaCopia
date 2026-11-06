@@ -7,13 +7,27 @@ html, body {
 }
 .shell {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     height: 100vh;
     height: 100dvh; /* soporte moderno */
 }
 .shell-navbar {
     flex-shrink: 0;
-    height: 4rem; /* 64px = h-16 */
+    width: 4rem; /* 64px = w-16 en móvil */
+    height: 100%;
+    min-height: 0;
+}
+@media (min-width: 768px) {
+    .shell-navbar {
+        width: 16rem; /* 256px = w-64 en escritorio */
+    }
+}
+.shell-main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
 }
 .shell-content {
     flex: 1;
@@ -31,4 +45,4 @@ html, body {
 }
 .shell-footer {
     flex-shrink: 0;
-}
+}

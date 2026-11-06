@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.biblioteca.bean.Enum.TipoCliente;
+import org.biblioteca.bean.Enum.TipoEstado;
+import org.biblioteca.bean.Enum.TipoUsuario;
 import org.biblioteca.bean.entity.Prestamo.Prestamo;
 import org.biblioteca.bean.entity.Prestamo.Reserva;
 
@@ -47,13 +48,14 @@ public class Cliente implements Serializable {
 	// java, que permite almacenar un conjunto de valores
 	@Column(name = "tipoCliente")
 	@Enumerated(EnumType.STRING)
-	private TipoCliente tipoCliente;
+	private TipoUsuario tipoCliente;
 
 	@Column(name = "fechaRegistro")
 	private LocalDate fechaRegistro;
 
 	@Column(name = "estado")
-	private boolean estado;
+	@Enumerated(EnumType.STRING)
+	private TipoEstado estado;
 
 	// Establece la relacion de uno a muchos
 	@ManyToOne(fetch = FetchType.EAGER) // Transaccionabilidad manytoOne debe ser rapida (eager)

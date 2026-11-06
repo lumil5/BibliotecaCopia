@@ -12,8 +12,16 @@
 
 # Con Maven del sistema
 mvn spring-boot:run
+# recarga automatica
+spring-boot-devtools
 
-# compile tailwindcss
+# Limpieza de binarios (actualizar/limpiar)
+.\mvnw.cmd clean 
+.\mvnw.cmd compile
+.\mvnw.cmd package -DskipTests
+.\mvnw.cmd spring-boot:run
+
+# Compilar tailwindcss
 ```powershell
 pnpm run build
 ```
